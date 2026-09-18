@@ -15,7 +15,7 @@ class AuthController extends Controller {
             'rut' => ['required', 'string', 'max:12', 'unique:usuarios,rut', 'regex:/^[0-9]+-[0-9kK]{1}$/'],
             'nombre' => 'required|string|max:100|regex:/^[\pL\s]+$/u',
             'apellido' => 'required|string|max:100|regex:/^[\pL\s]+$/u',
-            'email' => ['required', 'string', 'max:255', 'unique:usuarios,email', 'regex:/^[a-zA-Z0-9._%+-]+@ventasfix\.cl$/'],
+            'email' => ['required', 'string', 'max:255', 'unique:usuarios,email', 'regex:/^(?=[a-zA-Z0-9._%+-]*\pL)[a-zA-Z0-9][a-zA-Z0-9._%+-]*@ventasfix\.cl$/u'],
             'password' => ['required', 'string', 'min:8', 'regex:/[\pL\d]/u'],
         ], [
             'rut.required' => 'El rut es obligatorio.',
@@ -27,7 +27,7 @@ class AuthController extends Controller {
             'apellido.regex' => 'El apellido solo puede contener letras y espacios.',
             'email.required' => 'El correo es obligatorio.',
             'email.unique' => 'Este correo ya esta registrado.',
-            'email.regex' => 'El correo debe ser del dominio @ventasfix.cl.',
+            'email.regex' => 'El formato del correo es erroneo y el dominio debe ser @ventasfix.cl.',
             'password.required' => 'La clave es obligatoria.',
             'password.min' => 'La clave debe tener al menos 8 caracteres.',
             'password.regex' => 'La clave no puede contener solo simbolos.',

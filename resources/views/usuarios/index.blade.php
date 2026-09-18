@@ -24,8 +24,31 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', async function () {
         protegerPagina();
+
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            const response = await fetch('/api/perfil', {
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Accept': 'application/json',
+                },
+            });
+            const data = await response.json();
+            const miId = data.usuario.id;
+
+            document.querySelectorAll('[data-usuario-id]').forEach(function (card) {
+                if (parseInt(card.dataset.usuarioId) === miId) {
+                    const btnEliminar = card.querySelector('.btn-eliminar-usuario');
+                    if (btnEliminar) btnEliminar.remove();
+                }
+            });
+        } catch (error) {
+            console.error('No se pudo verificar el usuario actual', error);
+        }
     });
 </script>
 @endpush
